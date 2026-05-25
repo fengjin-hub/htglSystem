@@ -1,0 +1,38 @@
+import { createRouter, createWebHistory } from 'vue-router'
+import LoginView from '../views/login/IndexView.vue'
+import layout from '../layout/IndexView.vue'
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView,
+    },
+    {
+      path: '/',
+      component: layout,
+      redirect: '/home',
+      children: [
+        {
+          path: '/home',
+          name: 'home',
+          component: () => import('../views/home/IndexView.vue'),
+        },
+      ],
+    },
+    {
+      path: '/',
+      component: layout,
+      children: [
+        {
+          path: '/user',
+          name: 'user',
+          component: () => import('../views/user/IndexView.vue'),
+        },
+      ],
+    },
+  ],
+})
+export default router
