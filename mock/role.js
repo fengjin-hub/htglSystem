@@ -1,4 +1,4 @@
-const deptList = [
+const userRoleList = [
   { name: '超级管理员', code: 'admin', data_permission: '全部数据权限' },
   { name: '系统管理员', code: 'system', data_permission: '全部数据权限' },
   { name: '运营管理员', code: 'operation', data_permission: '本部门及以下' },
@@ -20,11 +20,11 @@ function rand(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-const roleList = Array.from({ length: deptList.length }, (_, i) => ({
+const roleList = Array.from({ length: userRoleList.length }, (_, i) => ({
   role_id: `2${String(i + 1).padStart(6, '0')}`,
-  role_name: deptList[i % deptList.length].name,
-  role_code: deptList[i % deptList.length].code,
-  data_permission: deptList[i % deptList.length].data_permission,
+  role_name: userRoleList[i % userRoleList.length].name,
+  role_code: userRoleList[i % userRoleList.length].code,
+  data_permission: userRoleList[i % userRoleList.length].data_permission,
   user_number: rand(1, 10),
   sort: i + 1,
   status: Math.random() > 0.3 ? 1 : 0,
@@ -42,7 +42,7 @@ export default [
         tempList = tempList.filter((item) => item.role_name.includes(role_name))
       }
       if (role_code) {
-        tempList = tempList.filter((item) => item.role_code === role_code)
+        tempList = tempList.filter((item) => item.role_code.includes(role_code))
       }
       if (status !== undefined && status !== '') {
         tempList = tempList.filter((item) => item.status === Number(status))

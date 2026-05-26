@@ -28,6 +28,7 @@
     :data="dialogFormData"
     :mode="dialogFormMode"
     :fields="dialogFields"
+    :default-value="{ status: 1 }"
     :rules="dialogRules"
     :add-api="addUser"
     :edit-api="editUser"
@@ -87,7 +88,7 @@ const dialogFields = [
     options: userRoleOptions,
   },
   { prop: 'phone_number', label: '手机号码', type: 'input' },
-  { prop: 'mail', label: '邮箱地址', type: 'input' },
+  { prop: 'email', label: '邮箱地址', type: 'input' },
   { prop: 'sex', label: '性别', type: 'select', placeholder: '请选择性别', options: sexOptions },
   { prop: 'status', label: '状态', type: 'switch', required: true, options: statusOptions },
   { prop: 'remark', label: '备注', type: 'textarea' },
@@ -100,7 +101,7 @@ const dialogRules = {
   ],
   full_name: [
     { required: true, message: '请输入用户姓名', trigger: 'blur' },
-    { min: 6, max: 10, message: '长度在6-10个字符之间', trigger: 'blur' },
+    { min: 3, max: 10, message: '长度在3-10个字符之间', trigger: 'blur' },
   ],
   dept_name: [{ required: true, message: '请选择所属部门', trigger: 'change' }],
   user_role: [{ required: true, message: '请选择角色', trigger: 'change' }],

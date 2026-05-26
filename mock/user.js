@@ -9,6 +9,11 @@ function randomDept() {
   return deptList[rand(0, deptList.length - 1)]
 }
 
+const fullNameList = ['周', '吴', '郑', '王', '李', '秦']
+function randomFullName() {
+  return fullNameList[rand(0, deptList.length - 1)]
+}
+
 function randomPhone() {
   return '13' + Array.from({ length: 9 }, () => rand(0, 9)).join('')
 }
@@ -27,8 +32,10 @@ function rand(min, max) {
 const userList = Array.from({ length: 60 }, (_, i) => ({
   user_id: `1${String(i + 1).padStart(6, '0')}`,
   user_name: randomStr(6, 10),
+  full_name: randomFullName() + randomStr(2, 4),
   sex: Math.random() > 0.5 ? 1 : 0,
   dept_name: randomDept(),
+  email: randomStr(6, 10) + '@163.com',
   phone_number: randomPhone(),
   status: Math.random() > 0.3 ? 1 : 0,
   create_time: randomDateTime(),
