@@ -25,12 +25,7 @@
           :show-overflow-tooltip="column.showOverflowTooltip"
         >
           <template v-if="column.type" #default="scope">
-            <img
-              v-if="column.type === 'image'"
-              :src="getImageSrc(column, scope.row)"
-              alt=""
-              class="table-image"
-            />
+            <img v-if="column.type === 'image'" :src="loginBg" alt="" class="table-image" />
             <div v-else-if="column.type === 'status'" class="status-wrap">
               <span class="status-dot" :class="getStatusClass(column, scope.row)" />
               <span>{{ getOptionLabel(column, scope.row) }}</span>
@@ -40,7 +35,7 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column v-if="showActions" label="操作" width="180" fixed="right">
+        <el-table-column v-if="showActions" label="操作" min-width="180" fixed="right">
           <template #default="scope">
             <el-button text type="primary" @click="handleEdit(scope.row)"> 编辑 </el-button>
             <el-button text type="danger" @click="handleDeleteOne(scope.row)"> 删除 </el-button>
@@ -53,7 +48,6 @@
     <el-pagination
       v-model:current-page="query.page"
       v-model:page-size="query.pageSize"
-      :page-sizes="pageSizes"
       :background="true"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
@@ -66,7 +60,8 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import loginBg from '@/assets/images/login_bg.png'
 
 const props = defineProps({
   columns: {
@@ -101,10 +96,6 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-  pageSizes: {
-    type: Array,
-    default: () => [10, 20, 30, 40],
-  },
 })
 
 const emit = defineEmits(['edit', 'deleteSuccess', 'loadSuccess'])
@@ -132,11 +123,6 @@ const getStatusClass = (column, row) => {
   return option?.className || (value ? 'enabled' : 'disabled')
 }
 
-const getImageSrc = (column, row) => {
-  if (typeof column.imageSrc === 'function') return column.imageSrc(row)
-  return getRowValue(row, column.prop) || column.imageSrc
-}
-
 const handleEdit = (rowData) => {
   emit('edit', { mode: 'edit', data: rowData })
 }
@@ -152,7 +138,21 @@ const deleteRows = async (rows) => {
   emit('deleteSuccess', rows)
 }
 
+const confirmDelete = async (message) => {
+  try {
+    await ElMessageBox.confirm(message, '删除确认', {
+      type: 'warning',
+    })
+
+    return true
+  } catch {
+    return false
+  }
+}
+
 const handleDeleteOne = async (row) => {
+  const ok = await confirmDelete(`确认删除${props.deleteDisplayLabel}【${row.user_name}】吗？`)
+  if (!ok) return
   await deleteRows([row])
   ElMessage.success(`${props.deleteDisplayLabel}【${row[props.rowNameKey]}】删除成功`)
 }
@@ -162,7 +162,10 @@ const handleDeleteMultiple = async () => {
     ElMessage.warning(`请至少选择一个${props.deleteDisplayLabel}进行删除`)
     return
   }
-
+  const ok = await confirmDelete(
+    `确认删除${selectedRows.value.length}个${props.deleteDisplayLabel}吗？`,
+  )
+  if (!ok) return
   const rows = selectedRows.value
   const names = rows.map((row) => row[props.rowNameKey]).join('、')
   await deleteRows(rows)

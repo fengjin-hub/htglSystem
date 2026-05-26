@@ -33,6 +33,17 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: '/',
+      component: layout,
+      children: [
+        {
+          path: '/role',
+          name: 'role',
+          component: () => import('../views/role/IndexView.vue'),
+        },
+      ],
+    },
   ],
 })
 export default router

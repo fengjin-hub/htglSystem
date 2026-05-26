@@ -17,13 +17,13 @@
         :delete-api="deleteUser"
         row-key="user_id"
         row-name-key="user_name"
-        entity-name="用户"
+        delete-display-label="用户"
         @edit="Open"
       />
     </div>
   </div>
 
-  <UserDialog
+  <FormDialog
     v-model:visible="dialogFormVisible"
     :data="dialogFormData"
     :mode="dialogFormMode"
@@ -39,30 +39,11 @@
 
 <script setup>
 import { ref } from 'vue'
-import SearchForm from './PublicComponent/SearchForm.vue'
-import Table from './PublicComponent/TableView.vue'
-import UserDialog from './PublicComponent/UserDialog.vue'
+import SearchForm from '@/components/SearchForm.vue'
+import Table from '@/components/TableView.vue'
+import FormDialog from '@/components/FormDialog.vue'
 import { getUserList, addUser, editUser, deleteUser } from '@/api/user'
-import loginBg from '@/assets/images/login_bg.png'
-
-const deptOptions = [
-  { label: '研发部', value: '研发部' },
-  { label: '销售部', value: '销售部' },
-  { label: '财务部', value: '财务部' },
-  { label: '运维部', value: '运维部' },
-  { label: '人事部', value: '人事部' },
-  { label: '后勤部', value: '后勤部' },
-]
-
-const statusOptions = [
-  { label: '启用', value: 1, className: 'enabled' },
-  { label: '禁用', value: 0, className: 'disabled' },
-]
-
-const sexOptions = [
-  { label: '男', value: 1 },
-  { label: '女', value: 0 },
-]
+import { statusOptions, sexOptions, deptOptions, userRoleOptions } from '@/constants/options'
 
 const searchFields = [
   { prop: 'user_name', label: '用户名', type: 'input' },
@@ -78,7 +59,7 @@ const searchFields = [
 const tableColumns = [
   { prop: 'user_id', label: '用户ID', width: 120 },
   { prop: 'user_name', label: '用户名', width: 120 },
-  { prop: 'avatar_img', label: '头像', width: 150, type: 'image', imageSrc: loginBg },
+  { prop: 'avatar_img', label: '头像', width: 120, type: 'image' },
   { prop: 'sex', label: '性别', width: 80, type: 'options', options: sexOptions },
   { prop: 'dept_name', label: '部门', width: 150 },
   { prop: 'phone_number', label: '手机号', width: 180 },
@@ -88,7 +69,7 @@ const tableColumns = [
 
 const dialogFields = [
   { prop: 'user_name', label: '用户名', type: 'input', required: true },
-  { prop: 'sex', label: '性别', type: 'select', placeholder: '请选择性别', options: sexOptions },
+  { prop: 'full_name', label: '用户姓名', type: 'input', required: true },
   {
     prop: 'dept_name',
     label: '所属部门',
@@ -97,8 +78,19 @@ const dialogFields = [
     placeholder: '请选择部门',
     options: deptOptions,
   },
-  { prop: 'phone_number', label: '手机号', type: 'input' },
-  { prop: 'status', label: '状态', type: 'radio', required: true, options: statusOptions },
+  {
+    prop: 'user_role',
+    label: '用户角色',
+    type: 'select',
+    required: true,
+    placeholder: '请选择角色',
+    options: userRoleOptions,
+  },
+  { prop: 'phone_number', label: '手机号码', type: 'input' },
+  { prop: 'mail', label: '邮箱地址', type: 'input' },
+  { prop: 'sex', label: '性别', type: 'select', placeholder: '请选择性别', options: sexOptions },
+  { prop: 'status', label: '状态', type: 'switch', required: true, options: statusOptions },
+  { prop: 'remark', label: '备注', type: 'textarea' },
 ]
 
 const dialogRules = {
@@ -106,13 +98,12 @@ const dialogRules = {
     { required: true, message: '请输入用户名', trigger: 'blur' },
     { min: 6, max: 10, message: '长度在6-10个字符之间', trigger: 'blur' },
   ],
-  dept_name: [
-    {
-      required: true,
-      message: '请选择所属部门',
-      trigger: 'change',
-    },
+  full_name: [
+    { required: true, message: '请输入用户姓名', trigger: 'blur' },
+    { min: 6, max: 10, message: '长度在6-10个字符之间', trigger: 'blur' },
   ],
+  dept_name: [{ required: true, message: '请选择所属部门', trigger: 'change' }],
+  user_role: [{ required: true, message: '请选择角色', trigger: 'change' }],
   status: [{ required: true, message: '请选择状态', trigger: 'change' }],
 }
 

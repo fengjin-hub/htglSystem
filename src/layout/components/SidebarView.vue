@@ -69,7 +69,7 @@ const data = [
       },
       {
         label: '角色管理',
-        path: '/systemManage/role',
+        path: '/role',
       },
       {
         label: '菜单管理',

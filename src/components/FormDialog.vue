@@ -1,6 +1,12 @@
 <template>
   <el-dialog v-model="dialogFormVisible" :title="title" :width="width">
-    <el-form ref="rulesFormRef" :model="form" :rules="rules" :label-width="labelWidth">
+    <el-form
+      ref="rulesFormRef"
+      :model="form"
+      :rules="rules"
+      :inline="true"
+      :label-width="labelWidth"
+    >
       <el-form-item
         v-for="field in fields"
         :key="field.prop"
@@ -11,17 +17,27 @@
         <el-input
           v-if="field.type === 'input' || !field.type"
           v-model="form[field.prop]"
-          :style="`width: ${field.width || 140}px`"
+          :style="getFieldStyle(field)"
           :placeholder="field.placeholder || `请输入${field.label}`"
-          v-bind="field.componentProps"
         />
-
+        <el-input
+          v-else-if="field.type === 'textarea'"
+          v-model="form[field.prop]"
+          type="textarea"
+          :style="getFieldStyle(field)"
+          :placeholder="field.placeholder || `请输入${field.label}`"
+        />
+        <el-input-number
+          v-else-if="field.type === 'number'"
+          v-model="form[field.prop]"
+          :min="1"
+          :style="getFieldStyle(field)"
+        />
         <el-select
           v-else-if="field.type === 'select'"
           v-model="form[field.prop]"
-          :style="`width: ${field.width || 140}px`"
+          :style="getFieldStyle(field)"
           :placeholder="field.placeholder || `请选择${field.label}`"
-          v-bind="field.componentProps"
         >
           <el-option
             v-for="option in field.options || []"
@@ -40,7 +56,12 @@
         <el-switch
           v-else-if="field.type === 'switch'"
           v-model="form[field.prop]"
-          v-bind="field.componentProps"
+          inline-prompt
+          style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+          :active-text="field.options[0].label"
+          :active-value="field.options[0].value"
+          :inactive-text="field.options[1].label"
+          :inactive-value="field.options[1].value"
         />
 
         <el-date-picker
@@ -49,7 +70,6 @@
           :type="field.type"
           :value-format="field.valueFormat || 'YYYY-MM-DD HH:mm:ss'"
           :style="`width: ${field.width || 240}px`"
-          v-bind="field.componentProps"
         />
       </el-form-item>
     </el-form>
@@ -80,6 +100,10 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  defaultValue: {
+    type: Object,
+    default: () => ({}),
+  },
   rules: {
     type: Object,
     default: () => ({}),
@@ -98,11 +122,11 @@ const props = defineProps({
   },
   width: {
     type: [String, Number],
-    default: 500,
+    default: 800,
   },
   labelWidth: {
     type: [String, Number],
-    default: 80,
+    default: 100,
   },
 })
 const emit = defineEmits(['success'])
@@ -112,9 +136,14 @@ const form = ref({})
 
 const title = computed(() => props.titleMap[props.mode] || props.titleMap.add)
 
+const getFieldStyle = (field) => {
+  const width = field.width ?? 250
+  return { width: typeof width === 'number' ? `${width}px` : width }
+}
+
 const initForm = () => {
   const baseForm = props.mode === 'add' ? {} : props.data
-  form.value = Object.assign({}, baseForm)
+  form.value = Object.assign({}, props.defaultValue, baseForm)
 }
 
 const submitForm = async () => {

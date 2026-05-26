@@ -25,7 +25,7 @@ function rand(min, max) {
 }
 
 const userList = Array.from({ length: 60 }, (_, i) => ({
-  user_id: `100000${i}`,
+  user_id: `1${String(i + 1).padStart(6, '0')}`,
   user_name: randomStr(6, 10),
   sex: Math.random() > 0.5 ? 1 : 0,
   dept_name: randomDept(),

@@ -13,7 +13,6 @@
           v-model="searchForm[field.prop]"
           clearable
           :placeholder="`请输入${field.label}`"
-          v-bind="field.componentProps"
         />
 
         <el-select
@@ -21,8 +20,7 @@
           v-model="searchForm[field.prop]"
           clearable
           :placeholder="`请选择${field.label}`"
-          :style="`width:${field.width || 140}px`"
-          v-bind="field.componentProps"
+          :style="getFieldStyle(field)"
         >
           <el-option
             v-for="option in field.options || []"
@@ -42,7 +40,6 @@
           :end-placeholder="field.endPlaceholder || '结束日期'"
           popper-class="my-date-popper"
           :teleported="true"
-          v-bind="field.componentProps"
         />
       </el-form-item>
     </el-form>
@@ -95,6 +92,11 @@ const props = defineProps({
 const emit = defineEmits(['add', 'deleteMultiple', 'search', 'reset'])
 
 const searchForm = reactive({})
+
+const getFieldStyle = (field) => {
+  const width = field.width ?? 140
+  return { width: typeof width === 'number' ? `${width}px` : width }
+}
 
 const cleanObject = (obj) => {
   const newObj = {}
