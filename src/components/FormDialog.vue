@@ -46,7 +46,15 @@
             :value="option.value"
           />
         </el-select>
-
+        <el-tree-select
+          v-else-if="field.type === 'tree-select'"
+          v-model="form[field.prop]"
+          :data="field.options || []"
+          :placeholder="field.placeholder || `请选择${field.label}`"
+          check-strictly
+          clearable
+          style="width: 250px"
+        />
         <el-radio-group v-else-if="field.type === 'radio'" v-model="form[field.prop]">
           <el-radio v-for="option in field.options || []" :key="option.value" :value="option.value">
             {{ option.label }}

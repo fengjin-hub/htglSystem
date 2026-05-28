@@ -214,9 +214,9 @@ const menuList = [
         menu_name: '部门管理',
         menu_type: 2,
         icon: 'OfficeBuilding',
-        path: '/system/dept',
-        component: 'DeptView',
-        permission: 'dept:list',
+        path: '/system/menu',
+        component: 'MenuView',
+        permission: 'menu:list',
         sort: 4,
         status: 1,
         create_time: randomDateTime(),
@@ -229,7 +229,7 @@ const menuList = [
             icon: '',
             path: '',
             component: '',
-            permission: 'dept:add',
+            permission: 'menu:add',
             sort: 1,
             status: 1,
             create_time: randomDateTime(),
@@ -243,7 +243,7 @@ const menuList = [
             icon: '',
             path: '',
             component: '',
-            permission: 'dept:edit',
+            permission: 'menu:edit',
             sort: 2,
             status: 1,
             create_time: randomDateTime(),
@@ -335,6 +335,18 @@ function updateMenu(list, menu) {
         ...item,
         ...menu,
         children: item.children || [],
+      }
+      if (item.parent_id !== menu.parent_id) {
+        const [removed] = list.splice(index, 1)
+        if (menu.parent_id) {
+          const newParent = findMenu(menuList, menu.parent_id)
+          if (newParent) {
+            newParent.children = newParent.children || []
+            newParent.children?.unshift(removed)
+          }
+        } else {
+          menuList.unshift(removed)
+        }
       }
       return true
     }

@@ -13,6 +13,7 @@
           v-model="form.parent_id"
           :data="menuListOptions"
           placeholder="请选择上级菜单"
+          check-strictly
           clearable
           style="width: 250px"
         />
@@ -142,19 +143,18 @@ const getOptionsLabel = (options, value) => {
   return option ? option.label : ''
 }
 
-const rules = {
+const rules = computed(() => ({
   menu_type: [{ required: true, message: '请选择菜单类型', trigger: 'change' }],
   menu_name: [
     {
       required: true,
-      // message: `请输入${getOptionsLabel(menuTypeOptions, form.value.menu_type)}名`,
-      message: '请输入',
+      message: `请输入${getOptionsLabel(menuTypeOptions, form.value.menu_type)}名`,
       trigger: 'blur',
     },
     { min: 3, max: 10, message: '长度在3-10个字符之间', trigger: 'blur' },
   ],
   status: [{ required: true, message: '请选择状态', trigger: 'change' }],
-}
+}))
 
 const submitForm = async () => {
   if (!rulesFormRef.value) return

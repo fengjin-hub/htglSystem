@@ -100,7 +100,7 @@ const deptList = [
             dept_id: '400119',
             parent_id: '400013',
             dept_name: '产品一组',
-            director: '高尔',
+            director: '曾毅',
             phone_number: randomPhone(),
             email: randomStr(6, 10) + '@163.com',
             member_sum: 35,
@@ -131,21 +131,8 @@ const deptList = [
         director: '李潭',
         phone_number: randomPhone(),
         email: randomStr(6, 10) + '@163.com',
-        member_sum: 10,
-        sort: 3,
-        status: 1,
-        create_time: randomDateTime(),
-        children: [],
-      },
-      {
-        dept_id: '400015',
-        parent_id: '400001',
-        dept_name: '财务部',
-        director: '周洁',
-        phone_number: randomPhone(),
-        email: randomStr(6, 10) + '@163.com',
         member_sum: 20,
-        sort: 4,
+        sort: 3,
         status: 1,
         create_time: randomDateTime(),
         children: [
@@ -164,7 +151,7 @@ const deptList = [
           },
           {
             dept_id: '400414',
-            parent_id: '400040001401',
+            parent_id: '400014',
             dept_name: '运营二组',
             director: '小裤',
             phone_number: randomPhone(),
@@ -176,6 +163,19 @@ const deptList = [
             children: [],
           },
         ],
+      },
+      {
+        dept_id: '400015',
+        parent_id: '400001',
+        dept_name: '财务部',
+        director: '周洁',
+        phone_number: randomPhone(),
+        email: randomStr(6, 10) + '@163.com',
+        member_sum: 20,
+        sort: 4,
+        status: 1,
+        create_time: randomDateTime(),
+        children: [],
       },
     ],
   },
@@ -233,6 +233,18 @@ function updateDept(list, dept) {
         ...item,
         ...dept,
         children: item.children || [],
+      }
+      if (item.parent_id !== dept.parent_id) {
+        const [removed] = list.splice(index, 1)
+        if (dept.parent_id) {
+          const newParent = findDept(deptList, dept.parent_id)
+          if (newParent) {
+            newParent.children = newParent.children || []
+            newParent.children?.unshift(removed)
+          }
+        } else {
+          deptList.unshift(removed)
+        }
       }
       return true
     }

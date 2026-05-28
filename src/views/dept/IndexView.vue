@@ -27,7 +27,7 @@
     :data="dialogFormData"
     :mode="dialogFormMode"
     :fields="dialogFields"
-    :default-value="{ status: 1 }"
+    :default-value="{ sort: 1, member_sum: 1, status: 1 }"
     :rules="dialogRules"
     :add-api="addDept"
     :edit-api="editDept"
@@ -38,12 +38,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import SearchForm from '@/components/SearchForm.vue'
 import Table from '@/components/TableView.vue'
 import FormDialog from '@/components/FormDialog.vue'
 import { getDeptList, addDept, editDept, deleteDept } from '@/api/dept'
 import { statusOptions } from '@/constants/options'
+
+const deptListOptions = ref([])
 
 const searchFields = [
   { prop: 'dept_name', label: '部门名称', type: 'input' },
@@ -57,7 +59,7 @@ const searchFields = [
 ]
 
 const tableColumns = [
-  { prop: 'dept_name', label: '部门名称', width: 200 },
+  { prop: 'dept_name', label: '部门名称', width: 300 },
   { prop: 'director', label: '负责人', width: 150 },
   { prop: 'phone_number', label: '联系电话', width: 180 },
   { prop: 'email', label: '邮箱', width: 180 },
@@ -67,8 +69,8 @@ const tableColumns = [
   { prop: 'create_time', label: '创建时间', width: 250 },
 ]
 
-const dialogFields = [
-  { prop: 'parent_id', label: '上级部门', type: 'input' },
+const dialogFields = computed(() => [
+  { prop: 'parent_id', label: '上级部门', type: 'tree-select', options: deptListOptions.value },
   { prop: 'dept_name', label: '部门名称', type: 'input', required: true },
   { prop: 'director', label: '负责人', type: 'input', required: true },
   { prop: 'phone_number', label: '联系电话', type: 'input' },
@@ -76,7 +78,7 @@ const dialogFields = [
   { prop: 'sort', label: '显示排序', type: 'number' },
   { prop: 'member_sum', label: '部门人数', type: 'number' },
   { prop: 'status', label: '状态', type: 'switch', required: true, options: statusOptions },
-]
+])
 
 const dialogRules = {
   dept_name: [
@@ -85,7 +87,7 @@ const dialogRules = {
   ],
   director: [
     { required: true, message: '请输入负责人', trigger: 'blur' },
-    { min: 3, max: 10, message: '长度在3-10个字符之间', trigger: 'blur' },
+    { min: 2, max: 10, message: '长度在2-10个字符之间', trigger: 'blur' },
   ],
   status: [{ required: true, message: '请选择状态', trigger: 'change' }],
 }
@@ -113,6 +115,19 @@ const handleDeleteMultiple = () => {
 const handleSearch = (searchForm) => {
   tableRef.value.loadTableData(searchForm)
 }
+
+const getTreeData = (data) =>
+  data.map((item) => ({
+    value: item.dept_id,
+    label: item.dept_name,
+    children: item.children?.length ? getTreeData(item.children) : [],
+  }))
+
+onMounted(async () => {
+  const { list = [] } = await getDeptList()
+  deptListOptions.value = getTreeData(list)
+  console.log('list', deptListOptions.value)
+})
 </script>
 
 <style lang="scss" scoped>
