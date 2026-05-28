@@ -1,12 +1,12 @@
+function rand(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
 function randomDateTime() {
   return `2026-05-${String(rand(1, 31)).padStart(2, '0')}
   ${String(rand(0, 23)).padStart(2, '0')}:
   ${String(rand(0, 59)).padStart(2, '0')}:
   ${String(rand(0, 59)).padStart(2, '0')}`
-}
-
-function rand(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
 const menuList = [

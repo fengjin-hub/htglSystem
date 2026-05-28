@@ -77,7 +77,7 @@ const data = [
       },
       {
         label: '部门管理',
-        path: '/path',
+        path: '/dept',
       },
     ],
   },

@@ -55,17 +55,17 @@ const router = createRouter({
         },
       ],
     },
-    // {
-    //   path: '/',
-    //   component: layout,
-    //   children: [
-    //     {
-    //       path: '/dept',
-    //       name: 'dept',
-    //       component: () => import('../views/dept/IndexView.vue'),
-    //     },
-    //   ],
-    // },
+    {
+      path: '/',
+      component: layout,
+      children: [
+        {
+          path: '/dept',
+          name: 'dept',
+          component: () => import('../views/dept/IndexView.vue'),
+        },
+      ],
+    },
   ],
 })
 export default router

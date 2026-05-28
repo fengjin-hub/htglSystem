@@ -72,16 +72,16 @@ export default [
     url: '/api/role/add',
     method: 'post',
     response: ({ body }) => {
-      const newrole = {
+      const newRole = {
         role_id: `011111${roleList.length}`,
         create_time: new Date().toLocaleString(),
         ...body,
       }
-      roleList.unshift(newrole)
+      roleList.unshift(newRole)
       return {
         code: 200,
         message: '新增成功',
-        data: newrole,
+        data: newRole,
       }
     },
   },
