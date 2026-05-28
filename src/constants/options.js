@@ -28,4 +28,10 @@ const userRoleOptions = [
   { label: '普通用户', value: '普通用户' },
 ]
 
-export { deptOptions, statusOptions, sexOptions, userRoleOptions }
+const menuTypeOptions = [
+  { label: '目录', value: 1, type: 'primary' },
+  { label: '菜单', value: 2, type: 'success' },
+  { label: '按钮', value: 3, type: 'warning' },
+]
+
+export { deptOptions, statusOptions, sexOptions, userRoleOptions, menuTypeOptions }

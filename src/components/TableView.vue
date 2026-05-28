@@ -33,6 +33,13 @@
             <span v-else-if="column.type === 'options'">
               {{ getOptionLabel(column, scope.row) }}
             </span>
+            <slot
+              v-else-if="column.type === 'slot'"
+              :name="column.prop"
+              :row="scope.row"
+              :column="column"
+              :index="scope.$index"
+            />
           </template>
         </el-table-column>
         <el-table-column v-if="showActions" label="操作" min-width="180" fixed="right">
@@ -46,6 +53,7 @@
     </div>
 
     <el-pagination
+      v-if="showPagination"
       v-model:current-page="query.page"
       v-model:page-size="query.pageSize"
       :background="true"
@@ -93,6 +101,10 @@ const props = defineProps({
     default: true,
   },
   showActions: {
+    type: Boolean,
+    default: true,
+  },
+  showPagination: {
     type: Boolean,
     default: true,
   },

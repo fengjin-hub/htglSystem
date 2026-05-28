@@ -44,6 +44,28 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: '/',
+      component: layout,
+      children: [
+        {
+          path: '/menu',
+          name: 'menu',
+          component: () => import('../views/menu/IndexView.vue'),
+        },
+      ],
+    },
+    // {
+    //   path: '/',
+    //   component: layout,
+    //   children: [
+    //     {
+    //       path: '/dept',
+    //       name: 'dept',
+    //       component: () => import('../views/dept/IndexView.vue'),
+    //     },
+    //   ],
+    // },
   ],
 })
 export default router

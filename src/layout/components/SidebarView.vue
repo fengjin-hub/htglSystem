@@ -73,9 +73,11 @@ const data = [
       },
       {
         label: '菜单管理',
+        path: '/menu',
       },
       {
         label: '部门管理',
+        path: '/path',
       },
     ],
   },
