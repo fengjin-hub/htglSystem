@@ -31,8 +31,8 @@
     :rules="dialogRules"
     :add-api="addDept"
     :edit-api="editDept"
-    :title-map="{ add: '新增用户', edit: '编辑用户' }"
-    :success-message="{ add: '用户添加成功', edit: '用户编辑成功' }"
+    :title-map="{ add: '新增部门', edit: '编辑部门' }"
+    :success-message="{ add: '部门添加成功', edit: '部门编辑成功' }"
     @success="handleSuccess"
   />
 </template>
@@ -46,7 +46,7 @@ import { getDeptList, addDept, editDept, deleteDept } from '@/api/dept'
 import { statusOptions } from '@/constants/options'
 
 const searchFields = [
-  { prop: 'dept_name', label: '用户名', type: 'input' },
+  { prop: 'dept_name', label: '部门名称', type: 'input' },
   { prop: 'director', label: '负责人', type: 'input' },
   { prop: 'status', label: '状态', type: 'select', width: 140, options: statusOptions },
   {
@@ -57,7 +57,7 @@ const searchFields = [
 ]
 
 const tableColumns = [
-  { prop: 'dept_name', label: '用户名', width: 200 },
+  { prop: 'dept_name', label: '部门名称', width: 200 },
   { prop: 'director', label: '负责人', width: 150 },
   { prop: 'phone_number', label: '联系电话', width: 180 },
   { prop: 'email', label: '邮箱', width: 180 },

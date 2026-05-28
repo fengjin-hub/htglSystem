@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <FormDialog
+  <MenuDialog
     v-model:visible="dialogFormVisible"
     :data="dialogFormData"
     :mode="dialogFormMode"
@@ -42,15 +42,14 @@
 import { ref } from 'vue'
 import SearchForm from '@/components/SearchForm.vue'
 import Table from '@/components/TableView.vue'
-// import FormDialog from '@/components/FormDialog.vue'
-import FormDialog from './components/MenuDialog.vue'
+import MenuDialog from './components/MenuDialog.vue'
 import { getMenuList, deleteMenu } from '@/api/menu'
 import { statusOptions, menuTypeOptions } from '@/constants/options'
 
 const searchFields = [
   { prop: 'menu_name', label: '菜单名称', type: 'input' },
-  { prop: 'menu_type', label: '菜单编码', type: 'input' },
-  { prop: 'status', label: '状态', type: 'select', width: 140, options: statusOptions },
+  { prop: 'menu_type', label: '菜单类型', type: 'select', width: 160, options: menuTypeOptions },
+  { prop: 'status', label: '状态', type: 'select', width: 130, options: statusOptions },
   {
     prop: 'create_time',
     label: '创建时间',

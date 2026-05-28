@@ -291,7 +291,7 @@ export default [
     response: ({ body }) => {
       const parent_id = body.parent_id || null
       const newDept = {
-        dept_id: `3${String(flattenTree(deptList).length + 1).padStart(6, '0')}`,
+        dept_id: `4${String(flattenTree(deptList).length + 1).padStart(6, '0')}`,
         parent_id,
         dept_name: '',
         dept_type: 1,

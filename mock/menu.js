@@ -393,16 +393,7 @@ export default [
     response: ({ body }) => {
       const parent_id = body.parent_id || null
       const newMenu = {
-        menu_id: `3${String(flattenTree(menuList).length + 1).padStart(6, '0')}`,
-        parent_id,
-        menu_name: '',
-        menu_type: 1,
-        icon: '',
-        path: '',
-        component: '',
-        permission: '',
-        sort: flattenTree(menuList).length + 1,
-        status: 1,
+        menu_id: `3${String(flattenTree(menuList).length + 1).padStart(6, '9')}`,
         create_time: new Date().toLocaleString(),
         children: [],
         ...body,
