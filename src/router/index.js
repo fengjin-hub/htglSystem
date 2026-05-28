@@ -66,6 +66,28 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: '/',
+      component: layout,
+      children: [
+        {
+          path: '/log',
+          name: 'log',
+          component: () => import('../views/log/IndexView.vue'),
+        },
+      ],
+    },
+    // {
+    //   path: '/',
+    //   component: layout,
+    //   children: [
+    //     {
+    //       path: '/profile',
+    //       name: 'profile',
+    //       component: () => import('../views/profile/IndexView.vue'),
+    //     },
+    //   ],
+    // },
   ],
 })
 export default router

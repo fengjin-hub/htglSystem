@@ -64,6 +64,23 @@ const menuIconOptions = [
   { label: '用户中心', value: 'UserFilled', icon: UserFilled },
 ]
 
+const logTypeOptions = [
+  { label: '新增用户', value: 1 },
+  { label: '修改权限', value: 2 },
+  { label: '查询列表', value: 3 },
+  { label: '登录失败', value: 4 },
+  { label: '导出数据', value: 5 },
+  { label: '登录失败', value: 6 },
+  { label: '访问页面', value: 7 },
+  { label: '上传失败', value: 8 },
+  { label: '下载文件', value: 9 },
+]
+
+const operateStatusOptions = [
+  { label: '成功', value: 1, className: 'enabled' },
+  { label: '失败', value: 0, className: 'disabled' },
+]
+
 export {
   deptOptions,
   statusOptions,
@@ -72,4 +89,6 @@ export {
   menuTypeOptions,
   parentMenuOptions,
   menuIconOptions,
+  logTypeOptions,
+  operateStatusOptions,
 }

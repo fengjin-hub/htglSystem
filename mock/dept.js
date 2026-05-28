@@ -267,13 +267,13 @@ export default [
     url: '/api/dept/list',
     method: 'get',
     response: ({ query }) => {
-      const { dept_name, dept_type, status, start_time, end_time } = query
+      const { dept_name, director, status, start_time, end_time } = query
       let tempList = sortTree([...deptList])
 
       tempList = filterTree(tempList, (item) => {
         const matchName = dept_name ? item.dept_name.includes(dept_name) : true
-        const matchType =
-          dept_type !== undefined && dept_type !== '' ? item.dept_type === Number(dept_type) : true
+        const matchDirector = director ? item.director.includes(director) : true
+
         const matchStatus =
           status !== undefined && status !== '' ? item.status === Number(status) : true
         let matchTime = true
@@ -285,7 +285,7 @@ export default [
           matchTime = time >= start && time <= end
         }
 
-        return matchName && matchType && matchStatus && matchTime
+        return matchName && matchDirector && matchStatus && matchTime
       })
 
       return {
@@ -306,7 +306,7 @@ export default [
         dept_id: `4${String(flattenTree(deptList).length + 1).padStart(6, '0')}`,
         parent_id,
         dept_name: '',
-        dept_type: 1,
+        director: 1,
         icon: '',
         path: '',
         component: '',

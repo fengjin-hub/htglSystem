@@ -4,18 +4,9 @@ function randomStr(min, max) {
   return Array.from({ length: length }, () => chars[rand(0, chars.length - 1)]).join('')
 }
 
-const deptList = ['研发部', '销售部', '财务部', '运维部', '人事部', '后勤部']
-function randomDept() {
-  return deptList[rand(0, deptList.length - 1)]
-}
-
 const fullNameList = ['周', '吴', '郑', '王', '李', '秦']
 function randomFullName() {
   return fullNameList[rand(0, fullNameList.length - 1)]
-}
-
-function randomPhone() {
-  return '13' + Array.from({ length: 9 }, () => rand(0, 9)).join('')
 }
 
 function randomDateTime() {
@@ -29,33 +20,34 @@ function rand(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-const userList = Array.from({ length: 60 }, (_, i) => ({
-  user_id: `1${String(i + 1).padStart(6, '0')}`,
-  user_name: randomStr(6, 10),
-  full_name: randomFullName() + randomStr(2, 4),
-  sex: Math.random() > 0.5 ? 1 : 0,
-  dept_name: randomDept(),
-  email: randomStr(6, 10) + '@163.com',
-  phone_number: randomPhone(),
+const logList = Array.from({ length: 60 }, (_, i) => ({
+  log_id: `6${String(i + 1).padStart(6, '0')}`,
+  log_code: `LOG${String(i + 1).padStart(6, '0')}`,
+  operator: randomFullName() + randomStr(2, 4),
+  operate_module: randomStr(6, 10), //操作模块
+  log_type: rand(1, 9), //日志类型
+  request_method: ['GET', 'POST', 'PUT', 'DELETE'][rand(0, 3)], //请求方式
+  ip: `192.168.1.${rand(1, 254)}`, //IP地址
+  cost: `${rand(100, 1000)}ms`, //耗时
   status: Math.random() > 0.3 ? 1 : 0,
   create_time: randomDateTime(),
 }))
 
 export default [
   {
-    url: '/api/user/list',
+    url: '/api/log/list',
     method: 'get',
     response: ({ query }) => {
-      const { user_name, status, dept_name, start_time, end_time, page = 1, pageSize = 10 } = query
-      let tempList = [...userList]
-      if (user_name) {
-        tempList = tempList.filter((item) => item.user_name.includes(user_name))
+      const { operator, log_type, status, start_time, end_time, page = 1, pageSize = 10 } = query
+      let tempList = [...logList]
+      if (operator) {
+        tempList = tempList.filter((item) => item.operator.includes(operator))
+      }
+      if (log_type !== undefined && log_type !== '') {
+        tempList = tempList.filter((item) => item.log_type === Number(log_type))
       }
       if (status !== undefined && status !== '') {
         tempList = tempList.filter((item) => item.status === Number(status))
-      }
-      if (dept_name) {
-        tempList = tempList.filter((item) => item.dept_name === dept_name)
       }
       if (start_time && end_time) {
         const start = new Date(start_time).getTime()
@@ -75,46 +67,46 @@ export default [
     },
   },
   {
-    url: '/api/user/add',
+    url: '/api/log/add',
     method: 'post',
     response: ({ body }) => {
-      const newUser = {
-        user_id: `100000${userList.length}`,
+      const newLog = {
+        log_id: `600000${logList.length}`,
         create_time: new Date().toLocaleString(),
         ...body,
       }
-      userList.unshift(newUser)
+      logList.unshift(newLog)
       return {
         code: 200,
         message: '新增成功',
-        data: newUser,
+        data: newLog,
       }
     },
   },
   {
-    url: '/api/user/edit',
+    url: '/api/log/edit',
     method: 'put',
     response: ({ body }) => {
-      const { user_id } = body
-      const index = userList.findIndex((item) => item.user_id === user_id)
+      const { log_id } = body
+      const index = logList.findIndex((item) => item.log_id === log_id)
       if (index !== -1) {
-        userList[index] = { ...userList[index], ...body }
+        logList[index] = { ...logList[index], ...body }
         return {
           code: 200,
           message: '更新成功',
-          data: userList[index],
+          data: logList[index],
         }
       }
     },
   },
   {
-    url: '/api/user/delete',
+    url: '/api/log/delete',
     method: 'delete',
     response: ({ body }) => {
-      const { user_ids } = body
-      for (let i = userList.length - 1; i >= 0; i--) {
-        if (user_ids.includes(userList[i].user_id)) {
-          userList.splice(i, 1)
+      const { log_ids } = body
+      for (let i = logList.length - 1; i >= 0; i--) {
+        if (log_ids.includes(logList[i].log_id)) {
+          logList.splice(i, 1)
         }
       }
       return {

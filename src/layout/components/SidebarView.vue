@@ -82,57 +82,12 @@ const data = [
     ],
   },
   {
-    label: '商品管理',
-    children: [
-      {
-        label: '商品列表',
-      },
-      {
-        label: '商品分类',
-      },
-      {
-        label: '商品审核',
-      },
-    ],
-  },
-  {
-    label: '订单管理',
-    children: [
-      {
-        label: '订单列表',
-      },
-      {
-        label: '退款管理',
-      },
-      {
-        label: '物流管理',
-      },
-    ],
-  },
-  {
-    label: '数据中心',
-    children: [
-      {
-        label: '数据统计',
-      },
-      {
-        label: '销售分析',
-      },
-      {
-        label: '用户增长 ',
-      },
-    ],
+    label: '日志管理',
+    path: '/log',
   },
   {
     label: '个人中心',
-    children: [
-      {
-        label: '个人信息',
-      },
-      {
-        label: '修改密码',
-      },
-    ],
+    path: '/profile',
   },
   {
     label: '系统设置',
