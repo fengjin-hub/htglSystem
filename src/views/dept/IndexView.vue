@@ -15,6 +15,7 @@
         :columns="tableColumns"
         :list-api="getDeptList"
         :delete-api="deleteDept"
+        :showPagination="false"
         row-key="dept_id"
         delete-display-column="dept_name"
         @edit="Open"

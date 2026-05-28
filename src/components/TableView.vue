@@ -9,6 +9,7 @@
         :row-key="rowKey"
         :header-cell-style="{ textAlign: 'center' }"
         :cell-style="{ textAlign: 'center' }"
+        default-expand-all
         style="width: 100%"
         height="100%"
         @selection-change="handleSelectionChange"
