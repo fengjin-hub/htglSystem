@@ -17,7 +17,7 @@
         :delete-api="deleteMenu"
         row-key="menu_id"
         row-name-key="menu_name"
-        delete-display-label="菜单"
+        delete-display-column="menu_name"
         :showPagination="false"
         @edit="Open"
       >
@@ -34,13 +34,6 @@
     v-model:visible="dialogFormVisible"
     :data="dialogFormData"
     :mode="dialogFormMode"
-    :fields="dialogFields"
-    :default-value="{ user_number: 0, sort: 1, status: 1 }"
-    :rules="dialogRules"
-    :add-api="addMenu"
-    :edit-api="editMenu"
-    :title-map="{ add: '新增菜单', edit: '编辑菜单' }"
-    :success-message="{ add: '菜单添加成功', edit: '菜单编辑成功' }"
     @success="handleSuccess"
   />
 </template>
@@ -49,9 +42,10 @@
 import { ref } from 'vue'
 import SearchForm from '@/components/SearchForm.vue'
 import Table from '@/components/TableView.vue'
-import FormDialog from '@/components/FormDialog.vue'
-import { getMenuList, addMenu, editMenu, deleteMenu } from '@/api/menu'
-import { statusOptions, deptOptions, menuTypeOptions } from '@/constants/options'
+// import FormDialog from '@/components/FormDialog.vue'
+import FormDialog from './components/MenuDialog.vue'
+import { getMenuList, deleteMenu } from '@/api/menu'
+import { statusOptions, menuTypeOptions } from '@/constants/options'
 
 const searchFields = [
   { prop: 'menu_name', label: '菜单名称', type: 'input' },
@@ -75,28 +69,6 @@ const tableColumns = [
   { prop: 'status', label: '状态', width: 120, type: 'status', options: statusOptions },
   { prop: 'create_time', label: '创建时间', width: 250 },
 ]
-
-const dialogFields = [
-  { prop: 'menu_name', label: '菜单名称', type: 'input', required: true },
-  { prop: 'menu_type', label: '菜单编码', type: 'input', required: true },
-  { prop: 'data_permission', label: '数据权限', type: 'input', required: true },
-  { prop: 'sort', label: '显示排序', type: 'number' },
-  { prop: 'menu_permission', label: '菜单权限', type: 'select', options: deptOptions },
-  { prop: 'status', label: '状态', type: 'switch', required: true, options: statusOptions },
-  { prop: 'remark', label: '备注', type: 'textarea' },
-]
-
-const dialogRules = {
-  menu_name: [
-    { required: true, message: '请输入菜单名', trigger: 'blur' },
-    { min: 3, max: 10, message: '长度在3-10个字符之间', trigger: 'blur' },
-  ],
-  menu_type: [
-    { required: true, message: '请输入菜单编码', trigger: 'blur' },
-    { min: 3, max: 20, message: '长度在3-20个字符之间', trigger: 'blur' },
-  ],
-  status: [{ required: true, message: '请选择状态', trigger: 'change' }],
-}
 
 const tableRef = ref(null)
 

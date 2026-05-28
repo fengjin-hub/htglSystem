@@ -16,8 +16,7 @@
         :list-api="getUserList"
         :delete-api="deleteUser"
         row-key="user_id"
-        row-name-key="user_name"
-        delete-display-label="用户"
+        delete-display-column="user_name"
         @edit="Open"
       />
     </div>
@@ -91,7 +90,7 @@ const dialogFields = [
   { prop: 'email', label: '邮箱地址', type: 'input' },
   { prop: 'sex', label: '性别', type: 'select', placeholder: '请选择性别', options: sexOptions },
   { prop: 'status', label: '状态', type: 'switch', required: true, options: statusOptions },
-  { prop: 'remark', label: '备注', type: 'textarea' },
+  { prop: 'remark', label: '备注', type: 'textarea', width: 630 },
 ]
 
 const dialogRules = {

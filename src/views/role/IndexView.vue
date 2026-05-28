@@ -16,8 +16,7 @@
         :list-api="getRoleList"
         :delete-api="deleteRole"
         row-key="role_id"
-        row-name-key="role_name"
-        delete-display-label="角色"
+        delete-display-column="role_name"
         @edit="Open"
       />
     </div>
@@ -75,7 +74,7 @@ const dialogFields = [
   { prop: 'sort', label: '显示排序', type: 'number' },
   { prop: 'menu_permission', label: '菜单权限', type: 'select', options: deptOptions },
   { prop: 'status', label: '状态', type: 'switch', required: true, options: statusOptions },
-  { prop: 'remark', label: '备注', type: 'textarea' },
+  { prop: 'remark', label: '备注', type: 'textarea', width: 630 },
 ]
 
 const dialogRules = {

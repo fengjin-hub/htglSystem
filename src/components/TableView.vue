@@ -88,13 +88,9 @@ const props = defineProps({
     type: String,
     default: 'id',
   },
-  rowNameKey: {
+  deleteDisplayColumn: {
     type: String,
-    default: 'name',
-  },
-  deleteDisplayLabel: {
-    type: String,
-    default: '数据',
+    default: 'id',
   },
   selectable: {
     type: Boolean,
@@ -121,18 +117,19 @@ const query = reactive({
 })
 const selectedRows = ref([])
 
-const getRowValue = (row, key) => row?.[key]
+const getDeleteDisplayLable = () => {
+  const label = props.columns.find((column) => column.prop === props.deleteDisplayColumn)?.label
+  return label
+}
 
 const getOptionLabel = (column, row) => {
-  const value = getRowValue(row, column.prop)
-  const option = column.options?.find((item) => item.value === value)
-  return option?.label ?? value
+  const option = column.options?.find((item) => item.value === row?.[column.prop])
+  return option?.label ?? row?.[column.prop]
 }
 
 const getStatusClass = (column, row) => {
-  const value = getRowValue(row, column.prop)
-  const option = column.options?.find((item) => item.value === value)
-  return option?.className || (value ? 'enabled' : 'disabled')
+  const option = column.options?.find((item) => item.value === row?.[column.prop])
+  return option?.className || (row?.[column.prop] ? 'enabled' : 'disabled')
 }
 
 const handleEdit = (rowData) => {
@@ -163,25 +160,25 @@ const confirmDelete = async (message) => {
 }
 
 const handleDeleteOne = async (row) => {
-  const ok = await confirmDelete(`确认删除${props.deleteDisplayLabel}【${row.user_name}】吗？`)
+  const ok = await confirmDelete(
+    `确认删除${getDeleteDisplayLable()}为【${row[props.deleteDisplayColumn]}】的数据吗？`,
+  )
   if (!ok) return
   await deleteRows([row])
-  ElMessage.success(`${props.deleteDisplayLabel}【${row[props.rowNameKey]}】删除成功`)
+  ElMessage.success(`${getDeleteDisplayLable()}【${row[props.deleteDisplayColumn]}】删除成功`)
 }
 
 const handleDeleteMultiple = async () => {
   if (selectedRows.value.length === 0) {
-    ElMessage.warning(`请至少选择一个${props.deleteDisplayLabel}进行删除`)
+    ElMessage.warning(`请至少选择一个${getDeleteDisplayLable()}进行删除`)
     return
   }
-  const ok = await confirmDelete(
-    `确认删除${selectedRows.value.length}个${props.deleteDisplayLabel}吗？`,
-  )
+  const ok = await confirmDelete(`确认删除${selectedRows.value.length}条数据吗？`)
   if (!ok) return
   const rows = selectedRows.value
-  const names = rows.map((row) => row[props.rowNameKey]).join('、')
+  const names = rows.map((row) => row[props.deleteDisplayColumn]).join('、')
   await deleteRows(rows)
-  ElMessage.success(`${props.deleteDisplayLabel}【${names}】等删除成功`)
+  ElMessage.success(`${getDeleteDisplayLable()}【${names}】等删除成功`)
 }
 
 const loadTableData = async (queryParam = {}) => {

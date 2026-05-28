@@ -1,3 +1,14 @@
+import {
+  HomeFilled,
+  Setting,
+  User,
+  Avatar,
+  Menu,
+  OfficeBuilding,
+  Document,
+  UserFilled,
+} from '@element-plus/icons-vue'
+
 const deptOptions = [
   { label: '研发部', value: '研发部' },
   { label: '销售部', value: '销售部' },
@@ -34,4 +45,31 @@ const menuTypeOptions = [
   { label: '按钮', value: 3, type: 'warning' },
 ]
 
-export { deptOptions, statusOptions, sexOptions, userRoleOptions, menuTypeOptions }
+const parentMenuOptions = [
+  { label: '无', value: 0 },
+  { label: '系统管理', value: 1 },
+  { label: '用户管理', value: 2 },
+  { label: '角色管理', value: 3 },
+  { label: '菜单管理', value: 4 },
+]
+
+const menuIconOptions = [
+  { label: '主页', value: 'House', icon: HomeFilled },
+  { label: '系统管理', value: 'Setting', icon: Setting },
+  { label: '用户管理', value: 'User', icon: User },
+  { label: '角色管理', value: 'Avatar', icon: Avatar },
+  { label: '菜单管理', value: 'Menu', icon: Menu },
+  { label: '部门管理', value: 'OfficeBuilding', icon: OfficeBuilding },
+  { label: '日志管理', value: 'Document', icon: Document },
+  { label: '用户中心', value: 'UserFilled', icon: UserFilled },
+]
+
+export {
+  deptOptions,
+  statusOptions,
+  sexOptions,
+  userRoleOptions,
+  menuTypeOptions,
+  parentMenuOptions,
+  menuIconOptions,
+}
