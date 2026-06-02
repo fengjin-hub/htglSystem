@@ -52,7 +52,7 @@
                 >Action 2</el-tooltip
               >
             </el-dropdown-item>
-            <el-dropdown-item style="color: red"> 退出登录</el-dropdown-item>
+            <el-dropdown-item style="color: red" @click="handleLogout"> 退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -63,11 +63,21 @@
 <script setup>
 import { Expand, Search, FullScreen, Bell, ArrowDown } from '@element-plus/icons-vue'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { removeToken } from '@/utils/auth'
 
+const router = useRouter()
 const dropDownRef = ref()
 
 const handleDropDown = () => {
   dropDownRef.value.handleOpen()
+}
+
+const handleLogout = () => {
+  // 这里可以执行退出登录的逻辑，例如清除用户信息、重置路由等
+  removeToken()
+
+  router.push('/login')
 }
 </script>
 

@@ -20,45 +20,26 @@ const router = createRouter({
           name: 'home',
           component: () => import('../views/home/IndexView.vue'),
         },
-      ],
-    },
-    {
-      path: '/',
-      component: layout,
-      children: [
         {
           path: '/user',
           name: 'user',
           component: () => import('../views/user/IndexView.vue'),
         },
-      ],
-    },
-    {
-      path: '/',
-      component: layout,
-      children: [
         {
           path: '/role',
           name: 'role',
           component: () => import('../views/role/IndexView.vue'),
         },
-      ],
-    },
-    {
-      path: '/',
-      component: layout,
-      children: [
         {
           path: '/menu',
           name: 'menu',
           component: () => import('../views/menu/IndexView.vue'),
         },
-      ],
-    },
-    {
-      path: '/',
-      component: layout,
-      children: [
+        {
+          path: '/menu',
+          name: 'menu',
+          component: () => import('../views/menu/IndexView.vue'),
+        },
         {
           path: '/dept',
           name: 'dept',
