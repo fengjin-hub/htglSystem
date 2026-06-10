@@ -10,7 +10,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
-import '@/permission/permission.js'
+import '@/router/permission.js'
 
 const app = createApp(App)
 
