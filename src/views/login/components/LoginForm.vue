@@ -50,7 +50,7 @@
 
 <script setup>
 import { ElFormItem } from 'element-plus'
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { User, Lock, Message, ChatRound, ChromeFilled } from '@element-plus/icons-vue'
 import router from '@/router'
 import { setToken } from '@/utils/auth'
@@ -95,6 +95,16 @@ const submitForm = (formEl) => {
     }
   })
 }
+
+onMounted(() => {
+  const rememberedUsername = localStorage.getItem('rememberedUsername')
+  const rememberedPassword = localStorage.getItem('rememberedPassword')
+  if (rememberedUsername && rememberedPassword) {
+    form.username = rememberedUsername
+    form.password = rememberedPassword
+    rememberChecked.value = true
+  }
+})
 </script>
 
 <style lang="scss" scoped>

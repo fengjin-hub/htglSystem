@@ -4,6 +4,7 @@ import { getToken } from '@/utils/auth.js'
 const whiteList = ['/login']
 
 router.beforeEach((to, from, next) => {
+  document.title = to.meta.title
   const token = getToken()
 
   if (token) {
