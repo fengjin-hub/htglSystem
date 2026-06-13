@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import App from './App.vue'
 import router from './router'
 
@@ -13,8 +13,10 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import '@/router/permission.js'
 
 const app = createApp(App)
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+app.use(pinia)
 
-app.use(createPinia())
 app.use(router)
 
 app.mount('#app')

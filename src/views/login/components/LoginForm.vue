@@ -53,7 +53,10 @@ import { ElFormItem } from 'element-plus'
 import { reactive, ref, onMounted } from 'vue'
 import { User, Lock, Message, ChatRound, ChromeFilled } from '@element-plus/icons-vue'
 import router from '@/router'
-import { setToken } from '@/utils/auth'
+// import { setToken } from '@/utils/auth'
+import { useUserStore } from '@/stores/modules/user'
+
+const userStore = useUserStore()
 
 const formRef = ref()
 const rules = reactive({
@@ -73,7 +76,7 @@ const form = reactive({
 const rememberChecked = ref(false)
 
 const handleLogin = () => {
-  setToken('admin-token')
+  userStore.setToken('admin-token')
   router.push('/home')
 }
 
