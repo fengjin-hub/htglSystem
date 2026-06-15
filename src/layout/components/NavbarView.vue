@@ -64,7 +64,6 @@
 import { Expand, Search, FullScreen, Bell, ArrowDown } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-// import { removeToken } from '@/utils/auth'
 import { useUserStore } from '@/stores/modules/user'
 
 const userStore = useUserStore()
