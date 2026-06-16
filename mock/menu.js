@@ -214,9 +214,9 @@ const menuList = [
         menu_name: '部门管理',
         menu_type: 2,
         icon: 'OfficeBuilding',
-        path: '/system/menu',
+        path: '/system/dept',
         component: 'MenuView',
-        permission: 'menu:list',
+        permission: 'dept:list',
         sort: 4,
         status: 1,
         create_time: randomDateTime(),
@@ -453,6 +453,24 @@ export default [
       return {
         code: 200,
         message: '删除成功',
+      }
+    },
+  },
+  //登录获取菜单信息
+  {
+    url: '/api/user/info',
+    method: 'get',
+    response: ({ headers }) => {
+      const token = headers.authorization
+      if (token === 'admin-token') {
+        return {
+          code: 200,
+          data: {
+            userInfo: { name: '管理员' },
+            roles: ['admin'],
+            menus: menuList,
+          },
+        }
       }
     },
   },

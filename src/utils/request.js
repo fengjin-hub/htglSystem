@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useUserStore } from '@/stores/modules/user'
 
 const request = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -6,10 +7,9 @@ const request = axios.create({
 })
 
 request.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token')
-
-  if (token) {
-    config.headers.Authorization = token
+  const userStore = useUserStore()
+  if (userStore.token) {
+    config.headers.Authorization = userStore.token
   }
 
   return config

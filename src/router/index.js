@@ -14,7 +14,7 @@ const router = createRouter({
       },
     },
     {
-      path: '/',
+      path: '/system',
       component: layout,
       redirect: '/home',
       children: [
@@ -28,7 +28,7 @@ const router = createRouter({
           },
         },
         {
-          path: '/user',
+          path: 'user',
           name: 'user',
           component: () => import('../views/user/IndexView.vue'),
           meta: {
@@ -37,7 +37,7 @@ const router = createRouter({
           },
         },
         {
-          path: '/role',
+          path: 'role',
           name: 'role',
           component: () => import('../views/role/IndexView.vue'),
           meta: {
@@ -46,7 +46,7 @@ const router = createRouter({
           },
         },
         {
-          path: '/menu',
+          path: 'menu',
           name: 'menu',
           component: () => import('../views/menu/IndexView.vue'),
           meta: {
@@ -55,16 +55,7 @@ const router = createRouter({
           },
         },
         {
-          path: '/menu',
-          name: 'menu',
-          component: () => import('../views/menu/IndexView.vue'),
-          meta: {
-            title: '菜单管理',
-            keepAlive: true,
-          },
-        },
-        {
-          path: '/dept',
+          path: 'dept',
           name: 'dept',
           component: () => import('../views/dept/IndexView.vue'),
           meta: {
@@ -85,17 +76,6 @@ const router = createRouter({
         },
       ],
     },
-    // {
-    //   path: '/',
-    //   component: layout,
-    //   children: [
-    //     {
-    //       path: '/profile',
-    //       name: 'profile',
-    //       component: () => import('../views/profile/IndexView.vue'),
-    //     },
-    //   ],
-    // },
   ],
 })
 export default router

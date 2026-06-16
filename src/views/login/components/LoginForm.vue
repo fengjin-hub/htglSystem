@@ -54,6 +54,7 @@ import { reactive, ref, onMounted } from 'vue'
 import { User, Lock, Message, ChatRound, ChromeFilled } from '@element-plus/icons-vue'
 import router from '@/router'
 import { useUserStore } from '@/stores/modules/user'
+import { login, getUserInfo } from '@/api/login'
 
 const userStore = useUserStore()
 
@@ -74,8 +75,14 @@ const form = reactive({
 })
 const rememberChecked = ref(false)
 
-const handleLogin = () => {
-  userStore.setToken('admin-token')
+const handleLogin = async () => {
+  const { token } = await login()
+  userStore.setToken(token)
+
+  const { menus, userInfo } = await getUserInfo()
+  userStore.setMenus(menus)
+  userStore.setUserInfo(userInfo)
+
   router.push('/home')
 }
 
