@@ -32,6 +32,8 @@ router.afterEach((to, from, failure) => {
     return
   }
   if (tagsStore.tags.some((item) => item.path === to.path)) return
+  if (to.path === '/home') return
+
   tagsStore.addTags({
     title: to.meta.title,
     path: to.path,

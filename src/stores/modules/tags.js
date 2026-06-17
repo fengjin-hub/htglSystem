@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useTagsStore = defineStore('tags', {
   state: () => ({
-    tags: [],
+    tags: [{ title: '首页', path: '/home', name: 'home' }],
   }),
   actions: {
     addTags(tag) {

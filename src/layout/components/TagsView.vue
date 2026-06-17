@@ -30,7 +30,6 @@ const router = useRouter()
 const route = useRoute()
 
 const chooseTagView = (tag) => {
-  // tagsStore.chooseTagView(tag)
   router.push({
     path: tag.path,
   })
