@@ -24,7 +24,7 @@
       <el-icon style="margin-right: 20px" :size="20">
         <Search />
       </el-icon>
-      <el-icon style="margin-right: 20px" :size="20">
+      <el-icon style="margin-right: 20px" :size="20" @click="toggleFullscreen">
         <FullScreen />
       </el-icon>
       <el-icon style="margin-right: 20px" :size="20">
@@ -34,34 +34,14 @@
       <el-dropdown ref="dropDownRef" trigger="click">
         <div style="display: inline-flex; align-items: center; cursor: pointer">
           <el-avatar :size="30" style="margin-right: 5px" @click="handleDropDown" />
-          管理员
+          {{ userStore.userInfo.name }}
           <el-icon :size="12">
             <ArrowDown />
           </el-icon>
         </div>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>
-              <el-tooltip
-                class="box-item"
-                effect="dark"
-                content="切换账号"
-                placement="left-start"
-                :hide-after="0"
-                >Action 1</el-tooltip
-              >
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <el-tooltip
-                class="box-item"
-                effect="dark"
-                content="切换账号"
-                placement="left-start"
-                :hide-after="0"
-                >Action 2</el-tooltip
-              >
-            </el-dropdown-item>
-            <el-dropdown-item style="color: red" @click="handleLogout"> 退出登录</el-dropdown-item>
+            <el-dropdown-item style="color: red" @click="handleLogout"> 退出登录 </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -81,13 +61,20 @@ const route = useRoute()
 const router = useRouter()
 const dropDownRef = ref()
 
+const toggleFullscreen = () => {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen()
+  } else {
+    document.exitFullscreen()
+  }
+}
+
 const handleDropDown = () => {
   dropDownRef.value.handleOpen()
 }
 
 const handleLogout = () => {
   userStore.logout()
-
   router.push('/login')
 }
 </script>
@@ -116,6 +103,12 @@ const handleLogout = () => {
     justify-content: center;
     align-items: center;
     height: 100%;
+    .el-icon {
+      cursor: pointer;
+      &:hover {
+        color: rgb(31, 111, 254);
+      }
+    }
   }
 }
 </style>

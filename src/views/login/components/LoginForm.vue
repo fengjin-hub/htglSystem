@@ -68,7 +68,7 @@ const form = reactive({
 const rememberChecked = ref(false)
 
 const handleLogin = async () => {
-  const { token } = await login()
+  const { token } = await login(form)
   userStore.setToken(token)
 
   const { menus, userInfo } = await getUserInfo()

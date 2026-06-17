@@ -1,7 +1,7 @@
 import request from '@/utils/request.js'
 
-export const login = () => {
-  return request.post('/login')
+export const login = (data) => {
+  return request.post('/login', data)
 }
 
 export const getUserInfo = () => {

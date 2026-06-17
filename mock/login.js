@@ -2,11 +2,11 @@ export default [
   {
     url: '/api/login',
     method: 'post',
-    response: () => {
+    response: ({ body }) => {
       return {
         code: 200,
         data: {
-          token: 'admin-token',
+          token: body.username === 'test' ? 'test-token' : 'admin-token',
         },
       }
     },

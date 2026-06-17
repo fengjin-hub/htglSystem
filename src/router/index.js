@@ -83,6 +83,25 @@ const router = createRouter({
           path: '/log',
           name: 'log',
           component: () => import('../views/log/IndexView.vue'),
+          meta: {
+            title: '日志管理',
+            keepAlive: true,
+          },
+        },
+      ],
+    },
+    {
+      path: '/',
+      component: layout,
+      children: [
+        {
+          path: '/profile',
+          name: 'profile',
+          component: () => import('../views/log/IndexView.vue'),
+          meta: {
+            title: '个人中心',
+            keepAlive: true,
+          },
         },
       ],
     },

@@ -471,6 +471,15 @@ export default [
             menus: menuList,
           },
         }
+      } else if (token === 'test-token') {
+        return {
+          code: 200,
+          data: {
+            userInfo: { name: '测试员' },
+            roles: ['test'],
+            menus: [menuList.at(0), menuList.at(-1)],
+          },
+        }
       }
     },
   },
