@@ -11,17 +11,19 @@
       text-color="#fff"
       active-text-color="#409EFF"
     >
-      <template v-for="item in getDataWithIcon(userStore.menus)" :key="item.menu_id">
+      <template v-for="item in userStore.menus" :key="item.menu_id">
         <el-menu-item v-if="!item.children.length" :index="item.path">
-          <el-icon v-if="item.icon" :size="17">
-            <component :is="item.iconDisplay" />
-          </el-icon>
-          <span>{{ item.menu_name }}</span>
+          <template #title>
+            <el-icon v-if="item.icon" :size="17">
+              <component :is="iconMap[item.icon]" />
+            </el-icon>
+            <span>{{ item.menu_name }}</span>
+          </template>
         </el-menu-item>
         <el-sub-menu v-else :index="item.path">
           <template #title>
             <el-icon v-if="item.icon" :size="17">
-              <component :is="item.iconDisplay" />
+              <component :is="iconMap[item.icon]" />
             </el-icon>
             <span>{{ item.menu_name }}</span>
           </template>
@@ -29,7 +31,7 @@
             <el-menu-item :index="child.path">
               <template #title>
                 <el-icon v-if="child.icon" :size="17">
-                  <component :is="child.iconDisplay" />
+                  <component :is="iconMap[child.icon]" />
                 </el-icon>
                 <span>{{ child.menu_name }}</span>
               </template>
@@ -52,35 +54,20 @@ import {
   Document,
   UserFilled,
 } from '@element-plus/icons-vue'
-import { onMounted } from 'vue'
 import { useUserStore } from '@/stores/modules/user'
 
 const userStore = useUserStore()
 
 const iconMap = {
   House: House,
-  Setting: Setting,
-  User: User,
-  Avatar: Avatar,
-  Menu: Menu,
-  OfficeBuilding: OfficeBuilding,
-  Document: Document,
-  UserFilled: UserFilled,
+  Setting,
+  User,
+  Avatar,
+  Menu,
+  OfficeBuilding,
+  Document,
+  UserFilled,
 }
-
-const getDataWithIcon = (data) => {
-  data.forEach((item) => {
-    if (iconMap[item.icon]) {
-      item.iconDisplay = iconMap[item.icon]
-    }
-    if (item.children?.length) {
-      getDataWithIcon(item.children)
-    }
-  })
-  return data
-}
-
-onMounted(() => {})
 </script>
 
 <style lang="scss" scoped>

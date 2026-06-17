@@ -1,8 +1,19 @@
 <template>
   <div class="tags-view-container">
-    <div class="tag-item" v-for="tag in tags" :key="tag.path">
+    <div
+      class="tag-item"
+      v-for="tag in tagsStore.tags"
+      :key="tag.path"
+      @click="chooseTagView(tag)"
+      :class="{ active: tag.path === route.path }"
+    >
       {{ tag.title }}
-      <el-icon :size="12" style="margin-left: 10px">
+      <el-icon
+        v-if="tag.title != '首页'"
+        :size="12"
+        style="margin-left: 10px"
+        @click.stop="removeTag(tag)"
+      >
         <Close />
       </el-icon>
     </div>
@@ -10,12 +21,30 @@
 </template>
 
 <script setup>
+import { useTagsStore } from '@/stores/modules/tags'
+import { useRouter, useRoute } from 'vue-router'
 import { Close } from '@element-plus/icons-vue'
 
-const tags = [
-  { title: '首页', path: '/home' },
-  { title: '用户管理', path: '/users' },
-]
+const tagsStore = useTagsStore()
+const router = useRouter()
+const route = useRoute()
+
+const chooseTagView = (tag) => {
+  // tagsStore.chooseTagView(tag)
+  router.push({
+    path: tag.path,
+  })
+}
+
+const removeTag = (tag) => {
+  tagsStore.removeTags(tag)
+
+  if (route.path === tag.path) {
+    router.push({
+      path: tagsStore.tags[tagsStore.tags.length - 1].path,
+    })
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -49,6 +78,11 @@ const tags = [
         color: red;
       }
     }
+  }
+  .active {
+    background-color: rgb(31, 111, 254);
+
+    color: white;
   }
 }
 </style>

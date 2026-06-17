@@ -127,7 +127,6 @@ const getTreeData = (data) =>
 onMounted(async () => {
   const { list = [] } = await getDeptList()
   deptListOptions.value = getTreeData(list)
-  console.log('list', deptListOptions.value)
 })
 </script>
 

@@ -2,15 +2,7 @@
   <div class="login-container">
     <h2>欢迎登录</h2>
     <h4>请输入您的账号密码</h4>
-    <el-form
-      ref="formRef"
-      :model="form"
-      status-icon
-      :rules="rules"
-      label-width="auto"
-      class="demo-form"
-      size="large"
-    >
+    <el-form ref="formRef" :model="form" status-icon :rules="rules" size="large">
       <el-form-item prop="username">
         <el-input
           v-model="form.username"

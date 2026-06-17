@@ -13,7 +13,7 @@
           <el-breadcrumb-item
             v-if="!['/', '/home'].includes(item.path)"
             :to="item.meta.clickAble === false ? undefined : { path: item.path }"
-            :class="item.meta.clickAble === false ? 'catalog' : ''"
+            :class="{ catalog: item.meta.clickAble === false }"
           >
             {{ item.meta.title }}
           </el-breadcrumb-item>
