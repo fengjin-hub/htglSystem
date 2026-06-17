@@ -14,19 +14,29 @@ const router = createRouter({
       },
     },
     {
-      path: '/system',
+      path: '/',
       component: layout,
-      redirect: '/home',
       children: [
         {
           path: '/home',
           name: 'home',
           component: () => import('../views/home/IndexView.vue'),
           meta: {
-            title: '主页',
+            title: '首页',
             keepAlive: true,
           },
         },
+      ],
+    },
+    {
+      path: '/system',
+      component: layout,
+      redirect: '/home',
+      meta: {
+        title: '系统管理',
+        clickAble: false,
+      },
+      children: [
         {
           path: 'user',
           name: 'user',

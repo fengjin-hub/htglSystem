@@ -2,10 +2,10 @@ import router from '@/router/index.js'
 import pinia from '@/stores'
 import { useUserStore } from '@/stores/modules/user'
 
-const userStore = useUserStore(pinia)
 const whiteList = ['/login']
 
 router.beforeEach((to, from, next) => {
+  const userStore = useUserStore(pinia)
   const token = userStore.token
 
   document.title = to.meta.title

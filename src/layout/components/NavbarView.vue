@@ -4,11 +4,20 @@
       <el-icon style="vertical-align: middle; margin-right: 10px">
         <Expand />
       </el-icon>
+      <el-breadcrumb separator="|">
+        <el-breadcrumb-item :to="{ path: '/home' }" class="catalog">首页</el-breadcrumb-item>
+        <el-breadcrumb-item v-if="route.path != '/home'" />
+      </el-breadcrumb>
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/sdsd' }">首r页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/sdsdsdsd' }">首页e</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/sdsdsdsd' }">首rrer页</el-breadcrumb-item>
+        <template v-for="item in route.matched" :key="item.path">
+          <el-breadcrumb-item
+            v-if="!['/', '/home'].includes(item.path)"
+            :to="item.meta.clickAble === false ? undefined : { path: item.path }"
+            :class="item.meta.clickAble === false ? 'catalog' : ''"
+          >
+            {{ item.meta.title }}
+          </el-breadcrumb-item>
+        </template>
       </el-breadcrumb>
     </div>
     <div class="nav-right">
@@ -63,11 +72,12 @@
 <script setup>
 import { Expand, Search, FullScreen, Bell, ArrowDown } from '@element-plus/icons-vue'
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/modules/user'
 
 const userStore = useUserStore()
 
+const route = useRoute()
 const router = useRouter()
 const dropDownRef = ref()
 
@@ -97,6 +107,9 @@ const handleLogout = () => {
     justify-content: center;
     align-items: center;
     height: 100%;
+    :deep(.catalog .el-breadcrumb__inner) {
+      font-weight: bold;
+    }
   }
   .nav-right {
     display: flex;
