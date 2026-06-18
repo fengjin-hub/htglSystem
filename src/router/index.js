@@ -40,7 +40,7 @@ const router = createRouter({
         {
           path: 'user',
           name: 'user',
-          component: () => import('../views/user/IndexView.vue'),
+          component: () => import('../views/system/user/IndexView.vue'),
           meta: {
             title: '用户管理',
             keepAlive: true,
@@ -49,7 +49,7 @@ const router = createRouter({
         {
           path: 'role',
           name: 'role',
-          component: () => import('../views/role/IndexView.vue'),
+          component: () => import('../views/system/role/IndexView.vue'),
           meta: {
             title: '角色管理',
             keepAlive: true,
@@ -58,7 +58,7 @@ const router = createRouter({
         {
           path: 'menu',
           name: 'menu',
-          component: () => import('../views/menu/IndexView.vue'),
+          component: () => import('../views/system/menu/IndexView.vue'),
           meta: {
             title: '菜单管理',
             keepAlive: true,
@@ -67,7 +67,7 @@ const router = createRouter({
         {
           path: 'dept',
           name: 'dept',
-          component: () => import('../views/dept/IndexView.vue'),
+          component: () => import('../views/system/dept/IndexView.vue'),
           meta: {
             title: '部门管理',
             keepAlive: true,

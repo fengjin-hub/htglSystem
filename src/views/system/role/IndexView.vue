@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import SearchForm from '@/components/SearchForm.vue'
 import Table from '@/components/TableView.vue'
 import FormDialog from '@/components/FormDialog.vue'
@@ -112,6 +112,8 @@ const handleDeleteMultiple = () => {
 const handleSearch = (searchForm) => {
   tableRef.value.loadTableData(searchForm)
 }
+
+onMounted(() => {})
 </script>
 
 <style lang="scss" scoped>
