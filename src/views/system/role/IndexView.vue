@@ -38,13 +38,15 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import SearchForm from '@/components/SearchForm.vue'
 import Table from '@/components/TableView.vue'
 import FormDialog from '@/components/FormDialog.vue'
 import { getRoleList, addRole, editRole, deleteRole } from '@/api/role'
-import { statusOptions, deptOptions } from '@/constants/options'
+import { statusOptions } from '@/constants/options'
+import { getMenuList } from '@/api/menu'
 
+const menuList = ref([])
 const searchFields = [
   { prop: 'role_name', label: '角色名称', type: 'input' },
   { prop: 'role_code', label: '角色编码', type: 'input' },
@@ -67,15 +69,21 @@ const tableColumns = [
   { prop: 'create_time', label: '创建时间', width: 250 },
 ]
 
-const dialogFields = [
+const dialogFields = computed(() => [
   { prop: 'role_name', label: '角色名称', type: 'input', required: true },
   { prop: 'role_code', label: '角色编码', type: 'input', required: true },
   { prop: 'data_permission', label: '数据权限', type: 'input', required: true },
   { prop: 'sort', label: '显示排序', type: 'number' },
-  { prop: 'menu_permission', label: '菜单权限', type: 'select', options: deptOptions },
+  {
+    prop: 'menu_permission',
+    label: '菜单权限',
+    type: 'tree-select',
+    multiple: true,
+    options: menuList.value,
+  },
   { prop: 'status', label: '状态', type: 'switch', required: true, options: statusOptions },
   { prop: 'remark', label: '备注', type: 'textarea', width: 630 },
-]
+])
 
 const dialogRules = {
   role_name: [
@@ -113,7 +121,22 @@ const handleSearch = (searchForm) => {
   tableRef.value.loadTableData(searchForm)
 }
 
-onMounted(() => {})
+function getMenuOption(data) {
+  return data.map((item) => {
+    return {
+      label: item.menu_name,
+      value: item.menu_id,
+      disabled: item.children.length > 0 && item.menu_type === 1,
+      children:
+        item.children.length > 0 && item.menu_type === 1 ? getMenuOption(item.children) : [],
+    }
+  })
+}
+
+onMounted(async () => {
+  const data = await getMenuList()
+  menuList.value = getMenuOption(data.list)
+})
 </script>
 
 <style lang="scss" scoped>

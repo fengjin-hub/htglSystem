@@ -52,6 +52,7 @@
           :data="field.options || []"
           :placeholder="field.placeholder || `请选择${field.label}`"
           check-strictly
+          :multiple="field.multiple || false"
           clearable
           style="width: 250px"
         />
