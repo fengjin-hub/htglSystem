@@ -8,11 +8,11 @@
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item prop="parent_id" label="上级菜单">
+      <el-form-item prop="parent_id" label="上级条目">
         <el-tree-select
           v-model="form.parent_id"
           :data="menuListOptions"
-          placeholder="请选择上级菜单"
+          placeholder="上级条目"
           check-strictly
           clearable
           style="width: 250px"
@@ -69,11 +69,11 @@
           style="width: 250px"
         />
       </el-form-item>
-      <el-form-item prop="component" label="组件路径">
+      <el-form-item prop="component_path" label="组件路径">
         <el-input
           :disabled="form.menu_type !== 2"
           :prop="form.icon"
-          v-model="form.component"
+          v-model="form.component_path"
           placeholder="请输入组件路径"
           style="width: 250px"
         />
@@ -152,6 +152,16 @@ const rules = computed(() => ({
       trigger: 'blur',
     },
     { min: 3, max: 10, message: '长度在3-10个字符之间', trigger: 'blur' },
+  ],
+  path: [
+    {
+      required: [1, 2].includes(form.value.menu_type),
+      message: '请输入路由地址',
+      trigger: 'change',
+    },
+  ],
+  component_path: [
+    { required: form.value.menu_type === 2, message: '请输入组件地址', trigger: 'change' },
   ],
   status: [{ required: true, message: '请选择状态', trigger: 'change' }],
 }))

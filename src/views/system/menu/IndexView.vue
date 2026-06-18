@@ -62,7 +62,7 @@ const tableColumns = [
   { prop: 'menu_type', label: '菜单类型', width: 120, type: 'slot', options: menuTypeOptions },
   { prop: 'icon', label: '图标', width: 120 },
   { prop: 'path', label: '路由地址', width: 120 },
-  { prop: 'component', label: '组件路径', width: 120 },
+  { prop: 'component_path', label: '组件路径', width: 120 },
   { prop: 'permission', label: '权限标识', width: 120 },
   { prop: 'sort', label: '排序', width: 120 },
   { prop: 'status', label: '状态', width: 120, type: 'status', options: statusOptions },

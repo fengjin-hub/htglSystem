@@ -44,11 +44,12 @@
 import { ElFormItem } from 'element-plus'
 import { reactive, ref, onMounted } from 'vue'
 import { User, Lock, Message, ChatRound, ChromeFilled } from '@element-plus/icons-vue'
-import router from '@/router'
+import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/modules/user'
 import { login, getUserInfo } from '@/api/login'
 
 const userStore = useUserStore()
+const router = useRouter()
 
 const formRef = ref()
 const rules = reactive({
