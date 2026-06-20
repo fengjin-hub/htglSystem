@@ -52,13 +52,11 @@ router.beforeEach((to, from) => {
   const token = userStore.token
   const router = useRouter()
   document.title = to.meta?.title || '后台管理系统'
-  console.log(router.getRoutes())
 
   if (token) {
     if (userStore.menus.length && !permissionStore.routesLoaded) {
       generateRoutes(userStore.menus)
       permissionStore.routesLoaded = true
-      console.log(router.getRoutes())
 
       return {
         ...to,

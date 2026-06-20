@@ -45,8 +45,22 @@
         </el-table-column>
         <el-table-column v-if="showActions" label="操作" min-width="180" fixed="right">
           <template #default="scope">
-            <el-button text type="primary" @click="handleEdit(scope.row)"> 编辑 </el-button>
-            <el-button text type="danger" @click="handleDeleteOne(scope.row)"> 删除 </el-button>
+            <el-button
+              v-permission="`${permissionPage}:edit`"
+              text
+              type="primary"
+              @click="handleEdit(scope.row)"
+            >
+              编辑
+            </el-button>
+            <el-button
+              v-permission="`${permissionPage}:delete`"
+              text
+              type="danger"
+              @click="handleDeleteOne(scope.row)"
+            >
+              删除
+            </el-button>
             <slot name="actions" :row="scope.row" :index="scope.$index" />
           </template>
         </el-table-column>
@@ -104,6 +118,10 @@ const props = defineProps({
   showPagination: {
     type: Boolean,
     default: true,
+  },
+  permissionPage: {
+    type: String,
+    default: '',
   },
 })
 

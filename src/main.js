@@ -11,6 +11,7 @@ import '@/assets/styles/index.scss'
 import 'element-plus/dist/index.css'
 
 import '@/router/permission'
+import { hasPermission } from '@/utils/vpermission'
 
 const app = createApp(App)
 
@@ -19,6 +20,15 @@ app.use(router)
 
 app.use(ElementPlus, {
   locale: zhCn,
+})
+
+app.directive('permission', {
+  mounted(el, binding) {
+    const permission = binding.value
+    if (!hasPermission(permission)) {
+      el.parentNode?.removeChild(el)
+    }
+  },
 })
 
 app.mount('#app')

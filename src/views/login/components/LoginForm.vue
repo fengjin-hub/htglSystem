@@ -73,8 +73,11 @@ const handleLogin = async () => {
   userStore.setToken(token)
 
   const { menus, userInfo } = await getUserInfo()
-  userStore.setMenus(menus)
   userStore.setUserInfo(userInfo)
+  userStore.setMenus(menus)
+
+  const permissions = getPermissionsList(menus)
+  userStore.setPermissions(permissions)
 
   router.push('/home')
 }
@@ -96,6 +99,16 @@ const submitForm = (formEl) => {
       return false
     }
   })
+}
+
+function getPermissionsList(menus, permission = []) {
+  menus.forEach((item) => {
+    permission.push(item.permission)
+    if (item.children?.length) {
+      getPermissionsList(item.children, permission)
+    }
+  })
+  return permission
 }
 
 onMounted(() => {

@@ -3,6 +3,7 @@
     <div class="search">
       <SearchForm
         :fields="searchFields"
+        permission-page="user"
         @add="Open"
         @deleteMultiple="handleDeleteMultiple"
         @search="handleSearch"
@@ -17,6 +18,7 @@
         :delete-api="deleteUser"
         row-key="user_id"
         delete-display-column="user_name"
+        permission-page="user"
         @edit="Open"
       />
     </div>

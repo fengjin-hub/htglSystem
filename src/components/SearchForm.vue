@@ -46,13 +46,35 @@
 
     <div class="form-btns">
       <div class="tool-btns">
-        <el-button v-if="showAdd" type="primary" plain :icon="Plus" @click="handleAdd">
+        <el-button
+          v-if="showAdd"
+          v-permission="`${permissionPage}:add`"
+          type="primary"
+          plain
+          :icon="Plus"
+          @click="handleAdd"
+        >
           新增
         </el-button>
-        <el-button v-if="showDelete" type="danger" plain :icon="Delete" @click="handleDelete">
+        <el-button
+          v-if="showDelete"
+          v-permission="`${permissionPage}:edit`"
+          type="danger"
+          plain
+          :icon="Delete"
+          @click="handleDelete"
+        >
           删除
         </el-button>
-        <el-button v-if="showExport" type="info" plain :icon="Download"> 导出 </el-button>
+        <el-button
+          v-if="showExport"
+          v-permission="`${permissionPage}:delete`"
+          type="info"
+          plain
+          :icon="Download"
+        >
+          导出
+        </el-button>
       </div>
       <div class="search-btns">
         <el-button type="primary" :icon="Search" @click="handleSearch"> 查询 </el-button>
@@ -86,6 +108,10 @@ const props = defineProps({
   showExport: {
     type: Boolean,
     default: true,
+  },
+  permissionPage: {
+    type: String,
+    default: '',
   },
 })
 

@@ -5,6 +5,7 @@ export const useUserStore = defineStore('user', {
     token: '',
     userInfo: {},
     menus: [],
+    permissions: [],
   }),
   actions: {
     setToken(token) {
@@ -15,6 +16,9 @@ export const useUserStore = defineStore('user', {
     },
     setMenus(menus) {
       this.menus = menus
+    },
+    setPermissions(permissions) {
+      this.permissions = permissions
     },
     logout() {
       this.$reset()

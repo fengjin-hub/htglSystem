@@ -3,6 +3,7 @@
     <div class="search">
       <SearchForm
         :fields="searchFields"
+        permission-page="role"
         @add="Open"
         @deleteMultiple="handleDeleteMultiple"
         @search="handleSearch"
@@ -17,6 +18,7 @@
         :delete-api="deleteRole"
         row-key="role_id"
         delete-display-column="role_name"
+        permission-page="role"
         @edit="Open"
       />
     </div>
@@ -128,7 +130,11 @@ function getMenuOption(data) {
       value: item.menu_id,
       disabled: item.children.length > 0 && item.menu_type === 1,
       children:
-        item.children.length > 0 && item.menu_type === 1 ? getMenuOption(item.children) : [],
+        item.children.length > 0 && [1, 2].includes(item.menu_type)
+          ? getMenuOption(item.children)
+          : item.menu_type
+            ? getMenuOption(item.children)
+            : [],
     }
   })
 }

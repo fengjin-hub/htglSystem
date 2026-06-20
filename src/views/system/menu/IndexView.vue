@@ -3,6 +3,7 @@
     <div class="search">
       <SearchForm
         :fields="searchFields"
+        permission-page="menu"
         @add="Open"
         @deleteMultiple="handleDeleteMultiple"
         @search="handleSearch"
@@ -19,6 +20,7 @@
         row-name-key="menu_name"
         delete-display-column="menu_name"
         :showPagination="false"
+        permission-page="menu"
         @edit="Open"
       >
         <template #menu_type="{ row }">
