@@ -58,7 +58,7 @@
         </el-button>
         <el-button
           v-if="showDelete"
-          v-permission="`${permissionPage}:edit`"
+          v-permission="`${permissionPage}:delete`"
           type="danger"
           plain
           :icon="Delete"
@@ -66,15 +66,7 @@
         >
           删除
         </el-button>
-        <el-button
-          v-if="showExport"
-          v-permission="`${permissionPage}:delete`"
-          type="info"
-          plain
-          :icon="Download"
-        >
-          导出
-        </el-button>
+        <el-button v-if="showExport" type="info" plain :icon="Download"> 导出 </el-button>
       </div>
       <div class="search-btns">
         <el-button type="primary" :icon="Search" @click="handleSearch"> 查询 </el-button>

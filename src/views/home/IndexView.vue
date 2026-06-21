@@ -32,12 +32,7 @@
       </div>
     </div>
     <div class="order-table">
-      <div class="table-header">
-        <p>近期订单</p>
-      </div>
-      <div class="table-container">
-        <OrderTable />
-      </div>
+      <OrderTable />
     </div>
   </div>
 </template>
@@ -130,17 +125,6 @@ const topInfo = [
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    .table-header {
-      height: 40px;
-      padding: 10px;
-      font-size: 20px;
-      font-weight: bold;
-    }
-    .table-container {
-      flex: 1;
-      min-height: 0;
-      box-sizing: border-box;
-    }
   }
 }
 </style>

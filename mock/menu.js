@@ -202,7 +202,7 @@ const menuList = [
             component_path: '',
             permission: 'menu:delete',
             sort: 3,
-            status: 0,
+            status: 1,
             create_time: randomDateTime(),
             children: [],
           },
@@ -257,7 +257,7 @@ const menuList = [
             path: '',
             permission: 'dept:delete',
             sort: 3,
-            status: 0,
+            status: 1,
             create_time: randomDateTime(),
             children: [],
           },
@@ -266,7 +266,7 @@ const menuList = [
     ],
   },
   {
-    menu_id: '300018',
+    menu_id: '300028',
     parent_id: null,
     menu_name: '日志管理',
     menu_type: 2,
@@ -277,7 +277,22 @@ const menuList = [
     sort: 3,
     status: 1,
     create_time: randomDateTime(),
-    children: [],
+    children: [
+      {
+        menu_id: '300064',
+        parent_id: '3000018',
+        menu_name: '删除日志',
+        menu_type: 3,
+        icon: '',
+        path: '',
+        component_path: '',
+        permission: 'log:delete',
+        sort: 3,
+        status: 1,
+        create_time: randomDateTime(),
+        children: [],
+      },
+    ],
   },
   {
     menu_id: '300019',
@@ -417,7 +432,7 @@ export default [
     response: ({ body }) => {
       const parent_id = body.parent_id || null
       const newMenu = {
-        menu_id: `3${String(flattenTree(menuList).length + 1).padStart(6, '9')}`,
+        menu_id: `333${String(flattenTree(menuList).length + 1).padStart(6, '9')}`,
         create_time: new Date().toLocaleString(),
         children: [],
         ...body,
@@ -478,7 +493,16 @@ export default [
         return {
           code: 200,
           data: {
-            userInfo: { name: '管理员' },
+            userInfo: {
+              nickname: '管理员',
+              role_name: '管理员',
+              user_name: 'admin',
+              phone_number: '13587479864',
+              sex: 1,
+              dept_name: '技术部',
+              email: 'admin@gmail.com',
+              create_time: randomDateTime(),
+            },
             roles: ['admin'],
             menus: menuList,
           },
@@ -487,7 +511,16 @@ export default [
         return {
           code: 200,
           data: {
-            userInfo: { name: '测试员' },
+            userInfo: {
+              nickname: '测试员',
+              role_name: '测试员',
+              user_name: 'test',
+              phone_number: '15789064586',
+              sex: 0,
+              dept_name: '测试组',
+              email: 'test@gmail.com',
+              create_time: randomDateTime(),
+            },
             roles: ['test'],
             menus: [menuList.at(0), menuList.at(-1)],
           },

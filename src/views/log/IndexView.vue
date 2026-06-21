@@ -3,6 +3,7 @@
     <div class="search">
       <SearchForm
         :fields="searchFields"
+        permission-page="log"
         :show-add="false"
         @deleteMultiple="handleDeleteMultiple"
         @search="handleSearch"
@@ -15,8 +16,8 @@
         :columns="tableColumns"
         :list-api="getLogList"
         :delete-api="deleteLog"
-        :show-actions="false"
         row-key="log_id"
+        permission-page="log"
         delete-display-column="log_code"
       />
     </div>

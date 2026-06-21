@@ -80,6 +80,7 @@ const handleLogin = async () => {
   userStore.setPermissions(permissions)
 
   router.push('/home')
+  // console.log(permissions)
 }
 
 const submitForm = (formEl) => {

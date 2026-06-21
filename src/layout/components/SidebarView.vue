@@ -12,15 +12,7 @@
       active-text-color="#409EFF"
     >
       <template v-for="item in userStore.menus" :key="item.menu_id">
-        <el-menu-item v-if="!item.children.length" :index="item.path">
-          <template #title>
-            <el-icon v-if="item.icon" :size="17">
-              <component :is="iconMap[item.icon]" />
-            </el-icon>
-            <span>{{ item.menu_name }}</span>
-          </template>
-        </el-menu-item>
-        <el-sub-menu v-else :index="item.path">
+        <el-sub-menu v-if="item.menu_type === 1" :index="item.path">
           <template #title>
             <el-icon v-if="item.icon" :size="17">
               <component :is="iconMap[item.icon]" />
@@ -38,6 +30,14 @@
             </el-menu-item>
           </template>
         </el-sub-menu>
+        <el-menu-item v-else :index="item.path">
+          <template #title>
+            <el-icon v-if="item.icon" :size="17">
+              <component :is="iconMap[item.icon]" />
+            </el-icon>
+            <span>{{ item.menu_name }}</span>
+          </template>
+        </el-menu-item>
       </template>
     </el-menu>
   </div>

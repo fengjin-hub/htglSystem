@@ -17,10 +17,11 @@ function generateRoutes(menus) {
       path: item.children.length > 0 ? item.path : '/',
       component: layout,
       meta: {
+        title: item.menu_name,
         clickAble: item.menu_type === 1 ? false : true,
       },
     })
-    if (item.menu_type === 2 && Array.isArray(item.children) && item.children.length === 0) {
+    if (item.menu_type === 2) {
       router.addRoute(item.menu_id, {
         path: item.path,
         name: adminSymbol,
@@ -44,6 +45,7 @@ function generateRoutes(menus) {
       })
     }
   })
+  // console.log(router.getRoutes())
 }
 
 router.beforeEach((to, from) => {

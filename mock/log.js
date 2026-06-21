@@ -67,39 +67,6 @@ export default [
     },
   },
   {
-    url: '/api/log/add',
-    method: 'post',
-    response: ({ body }) => {
-      const newLog = {
-        log_id: `600000${logList.length}`,
-        create_time: new Date().toLocaleString(),
-        ...body,
-      }
-      logList.unshift(newLog)
-      return {
-        code: 200,
-        message: '新增成功',
-        data: newLog,
-      }
-    },
-  },
-  {
-    url: '/api/log/edit',
-    method: 'put',
-    response: ({ body }) => {
-      const { log_id } = body
-      const index = logList.findIndex((item) => item.log_id === log_id)
-      if (index !== -1) {
-        logList[index] = { ...logList[index], ...body }
-        return {
-          code: 200,
-          message: '更新成功',
-          data: logList[index],
-        }
-      }
-    },
-  },
-  {
     url: '/api/log/delete',
     method: 'delete',
     response: ({ body }) => {
