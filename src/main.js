@@ -13,6 +13,13 @@ import 'element-plus/dist/index.css'
 import '@/router/permission'
 import { hasPermission } from '@/utils/vpermission'
 
+if (import.meta.env.PROD) {
+  // 生产环境加载 mock
+  import('../mockProdServer.js').then(({ setupProdMockServer }) => {
+    setupProdMockServer()
+  })
+}
+
 const app = createApp(App)
 
 app.use(pinia)
