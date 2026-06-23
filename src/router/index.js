@@ -1,21 +1,21 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import LoginView from '../views/login/IndexView.vue'
 import layout from '../layout/IndexView.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/login',
       name: 'login',
-      component: LoginView,
+      component: () => import('../views/login/IndexView.vue'),
       meta: {
         title: '登录',
       },
     },
     {
       path: '/',
-      component: layout,
+      component: () => import('../layout/IndexView.vue'),
       children: [
         {
           path: '/home',

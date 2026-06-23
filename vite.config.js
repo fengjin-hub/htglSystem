@@ -28,6 +28,7 @@ export default defineConfig(({ mode }) => {
         // `,
       }),
     ],
+    base: '/htglSystem/',
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
