@@ -1,6 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import LoginView from '../views/login/IndexView.vue'
-import layout from '../layout/IndexView.vue'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -18,7 +16,7 @@ const router = createRouter({
       component: () => import('../layout/IndexView.vue'),
       children: [
         {
-          path: '/home',
+          path: 'home',
           name: 'home',
           component: () => import('../views/home/IndexView.vue'),
           meta: {
