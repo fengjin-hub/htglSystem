@@ -74,8 +74,8 @@
       :background="true"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
-      @size-change="loadTableData"
-      @current-change="loadTableData"
+      @size-change="loadTableData(searchFormValue)"
+      @current-change="loadTableData(searchFormValue)"
       class="pagination"
     />
   </div>
@@ -129,6 +129,7 @@ const emit = defineEmits(['edit', 'deleteSuccess', 'loadSuccess'])
 
 const tableData = ref([])
 const loading = ref(false)
+const searchFormValue = ref({})
 const total = ref(0)
 const query = reactive({
   page: 1,
@@ -201,9 +202,10 @@ const handleDeleteMultiple = async () => {
 }
 
 const loadTableData = async (queryParam = {}) => {
+  searchFormValue.value = { ...queryParam }
   loading.value = true
   try {
-    const data = await props.listApi({ ...queryParam, ...query })
+    const data = await props.listApi({ ...searchFormValue.value, ...query })
     tableData.value = data?.list ?? []
     total.value = data?.total ?? tableData.value.length
     emit('loadSuccess', data)
